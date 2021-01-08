@@ -5,9 +5,7 @@ let repoSchema = mongoose.Schema({
   // TODO: your schema here!
   name: String,
   url: String,
-  watchers: Number,
-  forkscount: Number,
-  score: Number
+  score: Number //watchers + forkcount
 });
 
 let Repo = mongoose.model('Repo', repoSchema);

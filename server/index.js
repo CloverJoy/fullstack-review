@@ -7,10 +7,9 @@ app.use(express.static(__dirname + '/../client/dist'));
 app.use(express.json());
 
 app.post('/repos', function (req, res) {
- console.log(req.body.user);
+//  console.log(req.body.user);
  let user = req.body.user
- let data = getReposByUsername(user);
- console.log(data)
+ getReposByUsername(user);
  res.sendStatus(201);
   // TODO - your code here!
   // This route should take the github username provided

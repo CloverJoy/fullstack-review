@@ -13,12 +13,19 @@ let getReposByUsername = (user) => {
       'Authorization': `token ${config.TOKEN}`
     }
   };
-  axios.get(options.url, {headers: options.headers})
+  let data;
+  const getDataFromGithub = () => {
+    axios.get(options.url, {headers: options.headers})
    .then(res => {
-    console.log(res.data);
+    data = res.data.map(x => {
+      let data = {name: x.name, url: x['html_url'], score: x.forks + x.watchers};
+      return data;
+    })
+      console.log(data);
    })
    .catch(err => console.log(err));
-
+  }
+  getDataFromGithub();
 }
 
 module.exports.getReposByUsername = getReposByUsername;
