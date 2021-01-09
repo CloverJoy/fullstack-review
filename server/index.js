@@ -1,7 +1,7 @@
 const express = require('express');
 let app = express();
 const {getReposByUsername} = require('../helpers/github.js');
-const {save} = require('../database/index.js');
+const {save, filter} = require('../database/index.js');
 
 
 app.use(express.static(__dirname + '/../client/dist'));
@@ -12,7 +12,9 @@ app.post('/repos', function (req, res) {
  let user = req.body.user
  getReposByUsername(user, (result) => {
      console.log(result);
-     save(result);
+     save(result, (finalresult) => {
+       res.send('success');
+     });
  });
 
   // TODO - your code here!
@@ -24,6 +26,13 @@ app.post('/repos', function (req, res) {
 app.get('/repos', function (req, res) {
   // TODO - your code here!
   // This route should send back the top 25 repos
+  filter(result => {
+    let data = [];
+    for (var i = 0; i < 25; i++) {
+      data.push(result[i]);
+    }
+    res.send(data)
+  })
 });
 
 let port = 1128;
