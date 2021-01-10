@@ -1,5 +1,8 @@
 const mongoose = require('mongoose');
-mongoose.connect('mongodb://localhost/fetcher');
+
+mongoose.connect('mongodb://localhost/fetcher', {
+  useMongoClient: true
+});
 
 let repoSchema = new mongoose.Schema({
   // TODO: your schema here!
@@ -41,7 +44,10 @@ let save = (repos, cb) => {
   // Repo.insertMany(repos)
   //   .then((r) => console.log('success'));
   Repo.insertMany(repos)
-    .then((r) => console.log('insert Success'))
+    .then((r) => {
+      console.log('insert Success')
+      cb(r);
+  })
   // Repo.find({}).sort('-score')
   //   .then((result => {
   //     let repoList = result.map((dat) => {
@@ -59,6 +65,8 @@ let filter = (cb) => {
       return {name: dat._doc.name, url: dat._doc.url, score: dat._doc.score};
     });
     console.log('find and sort complete');
+    console.log(`List of repos ${repoList}`);
+
     cb(repoList);
   }))
 }

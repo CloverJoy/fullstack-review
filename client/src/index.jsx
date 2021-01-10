@@ -5,6 +5,7 @@ import Search from './components/Search.jsx';
 import RepoList from './components/RepoList.jsx';
 import axios from 'axios';
 
+
 class App extends React.Component {
   constructor(props) {
     super(props);
@@ -28,12 +29,21 @@ class App extends React.Component {
 
   search (term) {
     console.log(`${term} was searched`);
-    this.getUpdatedData();
+    //this.getUpdatedData();
     axios.post('/repos', {user: term})
       .then((response) => {
+        // this will return array of repository name from mongodb
+        console.log(`Response is ${response}`);
         this.getUpdatedData();
+
       })
       .catch((error) => console.log(error));
+
+
+    // setTimeout(() => {
+    //   console.log("Fired in 2 seconds");
+    //   this.getUpdatedData();
+    // }, 2000);
   }
 
   componentDidMount() {

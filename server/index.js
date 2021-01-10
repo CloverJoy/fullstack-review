@@ -1,6 +1,6 @@
 const express = require('express');
 let app = express();
-const getReposByUsername = require('../helpers/github.js');
+const {getReposByUsername} = require('../helpers/github.js');
 const {save, filter} = require('../database/index.js');
 
 
@@ -10,10 +10,15 @@ app.use(express.json());
 app.post('/repos', function (req, res) {
 //  console.log(req.body.user);
  let user = req.body.user
- getReposByUsername.getReposByUsername(user, (result) => {
+ getReposByUsername(user, (result) => {
      console.log(result);
      save(result, (finalresult) => {
-       res.send('success');
+       if (result === finalresult) {
+         res.send(finalResult);
+       } else {
+         res.send([]);
+       }
+       //res.send('success');
      });
  });
 
