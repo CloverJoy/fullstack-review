@@ -1,6 +1,6 @@
 const express = require('express');
 let app = express();
-const {getReposByUsername} = require('../helpers/github.js');
+const getReposByUsername = require('../helpers/github.js');
 const {save, filter} = require('../database/index.js');
 
 
@@ -10,7 +10,7 @@ app.use(express.json());
 app.post('/repos', function (req, res) {
 //  console.log(req.body.user);
  let user = req.body.user
- getReposByUsername(user, (result) => {
+ getReposByUsername.getReposByUsername(user, (result) => {
      console.log(result);
      save(result, (finalresult) => {
        res.send('success');
@@ -28,10 +28,19 @@ app.get('/repos', function (req, res) {
   // This route should send back the top 25 repos
   filter(result => {
     let data = [];
-    for (var i = 0; i < 25; i++) {
-      data.push(result[i]);
+    if (result.length <= 25) {
+      for (let each of result) {
+        data.push(each)
+      }
+      console.log('Data is less then 25')
+      res.send(data)
+    } else {
+      for (var i = 0; i < 25; i++) {
+        data.push(result[i]);
+      }
+      console.log('data procceed');
+      res.send(data);
     }
-    res.send(data)
   })
 });
 

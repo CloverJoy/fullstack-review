@@ -23,9 +23,9 @@ let getReposByUsername = (user, cb) => {
     })
       // console.log(data);
       cb(data)
-      console.log('this is succesfully called');
+      console.log('Github succesfully fetched');
    })
-   .catch(err => console.log(err));
+   .catch(err => console.log('Fetch failed from GitHub'));
   }
 
 

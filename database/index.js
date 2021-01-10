@@ -58,7 +58,7 @@ let filter = (cb) => {
     let repoList = result.map((dat) => {
       return {name: dat._doc.name, url: dat._doc.url, score: dat._doc.score};
     });
-    console.log('find complete');
+    console.log('find and sort complete');
     cb(repoList);
   }))
 }
